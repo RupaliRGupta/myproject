@@ -1,0 +1,7 @@
+<form method='POST'>
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type='submit' value='Update Food'>
+    {% csrf_token %}
+</form>

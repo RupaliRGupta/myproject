@@ -1,0 +1,9 @@
+<form method='POST'>
+<h3 style="color:red">	{{error}} </h3>
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type='submit' value='login'>
+    {% csrf_token %}
+</form>
+<a href="/">Home</a>

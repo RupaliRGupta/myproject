@@ -1,0 +1,49 @@
+{% load static %}
+{% include 'home.html' %}
+<script>
+	$(document).ready(function(){
+		$("#food").blur(function(){
+			var food=$("#food").val();
+			$.get('/foodapp/FoodRest/',{'food':food},function(data){
+			alert(data);
+			});	
+		});
+	});
+</script>
+<tr><input type="text" id="food" placeholder="enter the food name"></tr>
+<table id="tbl">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+		{% if request.session.utype != 'Admin' %}
+		<th> Action</th>
+		{% endif %}
+    </tr>
+    {% if allfoods %}
+        {% for f in allfoods %}
+        <tr>
+            <td>{{f.id}}</td>
+            <td>{{f.name}}</td>
+            <td>{{f.price}}</td>
+            <td>{{f.quantity}}</td>
+			<td colspan=3>
+				{% if request.session.email %}
+				<a href="/cartapp/addToCart/{{f.id}}"><img src="{% static 'images/cart.png' %}" width=30 height=30 alt='ADD CART'></a>
+				{% if request.session.utype == 'Admin' %}
+				<a href="/foodapp/update/{{f.id}}"><img src="{% static 'images/edit.png' %}" width=30 height=30 alt='update'></a>
+				<a href="/foodapp/delete/{{f.id}}"><img src="{% static 'images/delete.png' %}" width=30 height=30 alt='delete'></a>
+				{% endif %}
+				{% endif %}
+			</td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+<h5 colspan=2>
+<a href='/foodapp/foods'><img src="{% static 'images/foods.png' %}" width=30 height=30 alt='alluser'></a> 
+&nbsp;  <a href='/foodapp/addfood'><img src="{% static 'images/add.png' %}" width=30 height=30 alt='adduser'></a>
+</h5>
+&nbsp;
+<a href='/'>home</a>
